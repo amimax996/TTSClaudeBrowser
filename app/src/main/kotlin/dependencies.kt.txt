@@ -1,0 +1,49 @@
+import org.gradle.kotlin.dsl.DependencyHandlerScope
+
+object Libs {
+    object Versions {
+        const val kotlin = "1.8.20"
+        const val coroutines = "1.7.1"
+        const val hilt = "2.44"
+        const val room = "2.5.2"
+        const val ksp = "1.8.20-1.0.11" // KSPのバージョン
+    }
+
+    // Plugins
+    const val androidGradlePlugin = "com.android.tools.build:gradle:8.0.0"
+    const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
+    const val hiltAndroidGradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:${Versions.hilt}"
+
+    // Libraries
+    const val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
+    const val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
+    const val hiltAndroid = "com.google.dagger:hilt-android:${Versions.hilt}"
+    const val hiltCompiler = "com.google.dagger:hilt-android-compiler:${Versions.hilt}"
+    const val roomRuntime = "androidx.room:room-runtime:${Versions.room}"
+    const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
+    const val roomKtx = "androidx.room:room-ktx:${Versions.room}"
+}
+
+// Plugins
+val plugins = mapOf(
+    "androidGradlePlugin" to Libs.androidGradlePlugin,
+    "kotlinGradlePlugin" to Libs.kotlinGradlePlugin,
+    "hiltAndroidGradlePlugin" to Libs.hiltAndroidGradlePlugin,
+    "ksp" to "com.google.devtools.ksp:${Libs.Versions.ksp}"
+)
+
+fun DependencyHandlerScope.implementation(dependencyNotation: Any): Dependency? =
+    add("implementation", dependencyNotation)
+
+fun DependencyHandlerScope.kapt(dependencyNotation: Any): Dependency? =
+    add("kapt", dependencyNotation)
+
+fun DependencyHandlerScope.ksp(dependencyNotation: Any): Dependency? =
+    add("ksp", dependencyNotation)
+
+// ... 他の依存関係の設定 ...
+
+object Navigation {
+    private const val version = "2.5.3" // Navigation Compose のバージョンを指定
+    const val compose = "androidx.navigation:navigation-compose:$version"
+}
